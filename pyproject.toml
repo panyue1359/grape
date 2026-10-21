@@ -1,0 +1,30 @@
+[build-system]
+requires = ["hatchling>=1.26"]
+build-backend = "hatchling.build"
+
+[project]
+name = "grape-mesh-cli"
+version = "0.1.0"
+description = "Headless INP/NTL mesh inspection and conversion CLI"
+readme = "README.md"
+license = "MIT"
+requires-python = ">=3.11,<3.14"
+dependencies = ["numpy>=1.26", "h5py>=3.10"]
+classifiers = [
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "License :: OSI Approved :: MIT License",
+  "Operating System :: Microsoft :: Windows",
+  "Operating System :: POSIX :: Linux",
+]
+
+[project.scripts]
+grape = "pinkviewer.cli:main"
+
+[project.optional-dependencies]
+build = ["pyinstaller>=6.10"]
+test = ["pytest>=8.0"]
+
+[tool.hatch.build.targets.wheel]
+packages = ["pinkviewer"]

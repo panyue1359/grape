@@ -1,0 +1,19 @@
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+
+# Python package and executable build outputs
+build/
+dist/
+.build-*/
+*.spec.bak
+
+# Local conversion results can be very large and are reproducible
+output/
+
+# Public benchmark data may be tracked as compressed archives; keep oversized raw inputs out.
+testFiles/Benchmarkf.ntl
+
+# Keep bibliographic reports; exclude attached papers unless redistribution is permitted.
+testFiles/*.pdf
