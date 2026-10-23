@@ -23,6 +23,7 @@ exe = EXE(
     a.datas,
     [],
     name='grape',
+    icon='assets/grape.ico',
     debug=False,
     bootloader_ignore_signals=False,
     strip=False,

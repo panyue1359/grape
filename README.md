@@ -42,7 +42,7 @@ Grape 面向需要在图形界面之外检查和转换 ProCAST 导出结果的�
 
 当前发行名称为 `grape-mesh-cli`，安装后的命令为 `grape`，Windows 单文件程序名为 `grape.exe`。Python 导入命名空间暂时保留为 `pinkviewer`，它属于迁移期实现细节。
 
-发布包中的 `grape-manual.md` 是供 Agent 阅读的工具说明，包含完整操作流程、诊断方法和输入约定；仓库中的对应文件是 [Grape 操作手册](docs/grape-manual.md)。设计与验证记录见 [UDF/README.md](UDF/README.md)。
+发布包中的 `Agent.md`（中文）和 `Agent-en.md`（English）是供 Agent 阅读的工具说明，包含输入准备、操作流程、诊断方法和输入约定；仓库中的对应文件分别为 [中文版](docs/Agent.md) 和 [英文版](docs/Agent-en.md)。设计与验证记录见 [UDF/README.md](UDF/README.md)。
 
 ## 功能特性
 
@@ -59,10 +59,10 @@ Grape 面向需要在图形界面之外检查和转换 ProCAST 导出结果的�
 ### 推荐：下载发布包
 
 1. 从项目的 [Releases](https://github.com/panyue1359/grape/releases) 页面下载适用于当前平台的发布压缩包。
-2. 将压缩包解压到一个独立目录，并保持 `grape.exe` 与 `grape-manual.md` 位于同一目录。
+2. 将压缩包解压到一个独立目录，并保持 `grape.exe` 与 `Agent.md` 位于同一目录。
 3. 向具有本地文件与终端访问能力的 Agent 提供该目录、从 ProCAST 导出的 `.inp` 网格和 `.ntl` 场文件路径，以及期望结果，然后使用下一节的提示词。
 
-普通用户无需安装 Python，也不需要手动运行 `grape.exe`。Agent 会根据 `grape-manual.md` 确定正确命令并完成输入检查、转换和产物验收。
+普通用户无需安装 Python，也不需要手动运行 `grape.exe`。Agent 会根据 `Agent.md` 判断是否需要先指导准备输入文件，再完成输入检查、转换和产物验收。
 
 ### 环境要求
 
@@ -123,7 +123,7 @@ python -m pinkviewer --help
 ```text
 请使用 <Grape 发布包目录> 中的 Grape 工具处理我的网格数据。
 
-开始前必须完整阅读同目录的 grape-manual.md，并严格按照其中的工作流调用 grape.exe。请先检查并校验输入，再根据数据类型和我的目标选择输出格式，执行转换后核对所有产物是否存在且非空；若生成 XDMF，请同时核对配套 HDF5 文件。不要覆盖已有文件。遇到输入冲突、格式不支持或信息不足时，先向我说明并询问，不要猜测。
+开始前必须完整阅读同目录的 Agent.md，并严格按照其中的工作流调用 grape.exe。如果我还没有准备输入文件，请先依据手册指导我从 Visual-Cast 导出 NTL 结果场和 INP 网格；如果我已说明文件准备好或已提供文件路径，则跳过准备指导，直接检查文件。之后根据数据类型和我的目标选择输出格式，执行转换并核对所有产物是否存在且非空；若生成 XDMF，请同时核对配套 HDF5 文件。不要覆盖已有文件。遇到输入冲突、格式不支持或信息不足时，先向我说明并询问，不要猜测。
 
 输入网格：<mesh.inp 的绝对路径>
 结果文件：<一个或多个 .ntl 的绝对路径；没有则写“无”>
@@ -135,7 +135,7 @@ python -m pinkviewer --help
 
 Agent 应按照以下闭环执行，而不是直接尝试转换：
 
-1. 定位 `grape.exe`，阅读 `grape-manual.md`，确认输入和输出路径。
+1. 定位 `grape.exe`，阅读 `Agent.md`；输入未准备好时先指导导出，否则确认输入和输出路径。
 2. 运行 `inspect` 获取网格结构和 NTL 分类。
 3. 运行 `validate` 检查节点映射与输入一致性。
 4. 根据字段类型和兼容矩阵选择 VTK、VTU 或 XDMF/HDF5。
@@ -298,7 +298,7 @@ pyinstaller --clean --onefile --name grape cli_entry.py
 1. 从当前分支创建范围明确的开发分支。
 2. 修改解析或输出逻辑时，为正常输入与失败路径同时添加测试。
 3. 运行完整测试套件，并核对新输出不会覆盖已有文件。
-4. 同步更新本 README、[操作手册](docs/grape-manual.md) 和必要的开发记录。
+4. 同步更新本 README、[操作手册](docs/Agent.md) 和必要的开发记录。
 5. 提交 Pull Request 时说明输入方言、输出格式、验证命令和仍存在的限制。
 
 请勿提交 `.venv/`、`build/`、`dist/`、缓存或大型生成数据。
@@ -344,7 +344,7 @@ Grape is designed for users who need to inspect and convert ProCAST-exported res
 
 The distribution is named `grape-mesh-cli`, the installed command is `grape`, and the Windows single-file executable is `grape.exe`. The Python import namespace remains `pinkviewer` for now and should be treated as a migration-era implementation detail.
 
-The `grape-manual.md` file in the release package is the Agent-facing tool instruction and contains the complete workflow, diagnostics, and input conventions. Its repository counterpart is the [Grape operation manual](docs/grape-manual.md). Design and validation records are available in [UDF/README.md](UDF/README.md).
+The release package includes `Agent.md` (Chinese) and `Agent-en.md` (English), the Agent-facing tool instructions for input preparation, the complete workflow, diagnostics, and input conventions. Their repository counterparts are the [Chinese guide](docs/Agent.md) and [English guide](docs/Agent-en.md). Design and validation records are available in [UDF/README.md](UDF/README.md).
 
 ### Features
 
@@ -361,10 +361,10 @@ The `grape-manual.md` file in the release package is the Agent-facing tool instr
 #### Recommended: download a release package
 
 1. Download the release archive for your platform from the project's [Releases](https://github.com/panyue1359/grape/releases) page.
-2. Extract it into a dedicated directory and keep `grape.exe` and `grape-manual.md` together.
+2. Extract it into a dedicated directory and keep `grape.exe` and `Agent.md` together.
 3. Give an Agent with local file and terminal access the release directory, the paths to the `.inp` mesh and `.ntl` field files exported from ProCAST, and the desired result, then use the prompt in the next section.
 
-Regular users do not need to install Python or run `grape.exe` manually. The Agent uses `grape-manual.md` to determine the correct commands and performs input inspection, conversion, and artifact verification.
+Regular users do not need to install Python or run `grape.exe` manually. The Agent uses `Agent.md` to determine whether input preparation guidance is needed, then performs input inspection, conversion, and artifact verification.
 
 #### Requirements
 
@@ -425,7 +425,7 @@ After extracting the release package, send the following prompt to an Agent with
 ```text
 Use the Grape tool in <Grape release directory> to process my mesh data.
 
-Before starting, read grape-manual.md in that directory in full and follow its workflow when invoking grape.exe. Inspect and validate the inputs first, choose an output format from the data type and my objective, then run the conversion and verify that every artifact exists and is non-empty. If XDMF is generated, verify its companion HDF5 file as well. Do not overwrite existing files. If inputs conflict, the requested format is unsupported, or information is missing, explain the issue and ask me instead of guessing.
+Before starting, read Agent.md in that directory in full and follow its workflow when invoking grape.exe. If I have not prepared the inputs, first guide me through exporting NTL result fields and the INP mesh from Visual-Cast as described in the manual. If I have said the files are ready or provided their paths, skip preparation guidance and inspect the files directly. Then choose an output format from the data type and my objective, run the conversion, and verify that every artifact exists and is non-empty. If XDMF is generated, verify its companion HDF5 file as well. Do not overwrite existing files. If inputs conflict, the requested format is unsupported, or information is missing, explain the issue and ask me instead of guessing.
 
 Input mesh: <absolute path to mesh.inp>
 Result files: <absolute paths to one or more .ntl files; write “none” if absent>
@@ -437,7 +437,7 @@ When finished, report the commands executed, node count, element count, element 
 
 The Agent should complete the following loop instead of attempting conversion immediately:
 
-1. Locate `grape.exe`, read `grape-manual.md`, and confirm the input and output paths.
+1. Locate `grape.exe`, read `Agent.md`, and either guide input preparation or confirm the provided input and output paths.
 2. Run `inspect` to obtain the mesh structure and NTL classifications.
 3. Run `validate` to check node mappings and input consistency.
 4. Select VTK, VTU, or XDMF/HDF5 from the field types and compatibility matrix.
@@ -600,7 +600,7 @@ The repository also maintains `grape.spec`. After building, run at least the hel
 1. Create a focused development branch from the current branch.
 2. Add tests for both valid inputs and failure paths whenever parser or writer behavior changes.
 3. Run the full test suite and verify that new outputs do not overwrite existing files.
-4. Keep this README, the [operation manual](docs/grape-manual.md), and relevant development records synchronized.
+4. Keep this README, the [operation manual](docs/Agent.md), and relevant development records synchronized.
 5. In the Pull Request, describe the input dialect, output format, validation commands, and remaining limitations.
 
 Do not commit `.venv/`, `build/`, `dist/`, caches, or large generated datasets.
