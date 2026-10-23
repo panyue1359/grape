@@ -97,13 +97,22 @@ python -m pinkviewer --help
 
 ### 从 ProCAST 获取输入文件
 
-在使用 Grape 前，先从同一个 ProCAST 模型或算例导出结果场与网格：
+在使用 Grape 前，先从同一个 ProCAST 模型或算例导出结果场与网格。
 
-1. 在 ProCAST 中进入 **Viewer** 模式。
-2. 选择需要转换的结果场，例如温度、孔隙率或速度，然后使用导出功能将每个所需场导出为 `.ntl` 文件。
-3. 切换到 **Mesh** 模式。
-4. 使用导出功能将当前网格导出为 `.inp` 文件。
-5. 将导出的 `.inp` 与一个或多个 `.ntl` 文件放在便于 Agent 访问的位置，并在任务提示中提供它们的绝对路径。
+**导出 NTL 结果场：**
+
+1. 使用 Visual-Cast 打开算例的 `.vdb` 项目文件。
+2. 选择 **Applications > Viewer**，切换到 Viewer 状态。
+3. 在结果列表中选择要导出的场，例如 `FVOL`，并隐藏铸型（mold），以便导出目标结果。
+4. 打开 **File > Export As > PATran, I-DEAS, STL, gom …**，在弹出的文件窗口中指定文件名和保存位置。
+5. 在文件窗口下方的 **Options** 栏选择时间导出方式：选择 **Interval** 可按指定间隔导出时间序列结果；另外两个选项用于导出指定时间步的结果。按需求设置间隔或时间步后完成导出，生成 `.ntl` 文件。对每个需要转换的结果场分别执行此操作。
+
+**导出 INP 网格：**
+
+1. 选择 **Applications > Mesh**，切换到 Mesh 状态。
+2. 打开 **File > Export**，在弹出的文件窗口中将导出格式保留为默认的 **ABAQUS files (*.inp)**。
+3. 将文件命名为“项目名g.inp”（例如项目名为 `Casting01` 时使用 `Casting01g.inp`），选择保存位置并完成导出。
+4. 将导出的 `.inp` 与一个或多个 `.ntl` 文件放在便于 Agent 访问的位置，并在任务提示中提供它们的绝对路径。
 
 > `.inp` 网格和 `.ntl` 场文件必须来自同一个模型或算例，并保持一致的节点 ID。若网格在结果计算后发生变化，请重新导出与结果对应的网格，否则 Grape 的 `validate` 步骤可能报告节点缺失、未知节点或数量不一致。
 
@@ -390,13 +399,22 @@ python -m pinkviewer --help
 
 #### Export inputs from ProCAST
 
-Before using Grape, export the result fields and mesh from the same ProCAST model or case:
+Before using Grape, export the result fields and mesh from the same ProCAST model or case.
 
-1. Enter **Viewer** mode in ProCAST.
-2. Select each result field you want to convert, such as temperature, porosity, or velocity, and use the export function to save it as an `.ntl` file.
-3. Switch to **Mesh** mode.
-4. Use the export function to save the current mesh as an `.inp` file.
-5. Put the exported `.inp` file and one or more `.ntl` files in a location accessible to the Agent, then provide their absolute paths in the task prompt.
+**Export NTL result fields:**
+
+1. Open the case's `.vdb` project file in Visual-Cast.
+2. Select **Applications > Viewer** to switch to Viewer mode.
+3. Select the result field to export, such as `FVOL`, and hide the mold so the target result is ready for export.
+4. Open **File > Export As > PATran, I-DEAS, STL, gom …**. In the file dialog, choose the file name and destination.
+5. In the **Options** section at the bottom of the dialog, choose the time export method. Select **Interval** to export a time series at the specified interval; the other two options export results at specified time steps. Set the interval or time steps as needed and complete the export to create an `.ntl` file. Repeat for each result field you need.
+
+**Export the INP mesh:**
+
+1. Select **Applications > Mesh** to switch to Mesh mode.
+2. Open **File > Export**. In the file dialog, keep the default format, **ABAQUS files (*.inp)**.
+3. Name the file `project-nameg.inp` (for example, use `Casting01g.inp` for a project named `Casting01`), choose a destination, and complete the export.
+4. Put the exported `.inp` file and one or more `.ntl` files in a location accessible to the Agent, then provide their absolute paths in the task prompt.
 
 > The `.inp` mesh and `.ntl` field files must come from the same model or case and use consistent node IDs. If the mesh changed after the result was computed, export the matching mesh again; otherwise, Grape's `validate` step may report missing nodes, unknown nodes, or inconsistent counts.
 
